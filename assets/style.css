@@ -34,18 +34,20 @@ a:hover {
 }
 
 a.button {
-  border: 2px solid #004400;
-  color: var(--dark-green);
+  border: 2px solid var(--teal);
+  color: var(--teal);
   border-radius: 4px;
   padding: 6px 24px;
   font-size: 14px;
   font-weight: 400;
+  background: var(--white);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
-
 a.button:hover {
   text-decoration: none;
-  background-color: var(--dark-green);
-  color: var(--light-green);
+  background-color: var(--teal);
+  color: var(--white);
+  border-color: var(--orange);
 }
 
 header {
@@ -57,7 +59,7 @@ header {
   right: 0;
   display: flex;
   justify-content: space-between;
-  background: #006d75; /* San Jose Sharks Teal */
+  background: var(--teal); /* San Jose Sharks Teal */
   padding: 0 32px;
   align-items: center;
   box-shadow: var(--shadow);
@@ -217,6 +219,107 @@ aside ul li {
 .pagination a:hover {
   background: var(--orange);
   color: var(--black);
+}
+
+/* --- Swipeable Columns for Mobile --- */
+html, body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.swipe-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  width: 100vw;
+  max-width: 100vw;
+  min-height: 60vh;
+  background: transparent;
+}
+.swipe-column {
+  flex: 0 0 100vw;
+  max-width: 100vw;
+  min-width: 100vw;
+  scroll-snap-align: start;
+  padding: 1.5rem 1rem 2rem 1rem;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+/* Remove .container hiding for mobile, only hide if not using swipe-container */
+@media (max-width: 899px) {
+  .container {
+    display: none !important;
+  }
+  .swipe-container {
+    display: flex !important;
+  }
+}
+
+/* Add swipe indicator for mobile */
+@media (max-width: 899px) {
+  .swipe-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem 0 1rem 0;
+    gap: 0.5rem;
+  }
+  .swipe-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--teal);
+    border-radius: 50%;
+    opacity: 0.3;
+    transition: opacity 0.2s;
+  }
+  .swipe-dot.active {
+    opacity: 1;
+    background: var(--orange);
+  }
+}
+
+@media (min-width: 900px) {
+  .swipe-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: visible;
+    scroll-snap-type: none;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 96px 24px 40px;
+    gap: 2.5rem;
+    align-items: flex-start;
+    background: transparent;
+  }
+  .swipe-column {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+    padding: 0;
+    background: transparent;
+  }
+  .news-column {
+    flex: 2 1 0;
+  }
+  .shopping-column {
+    flex: 1 1 0;
+    background: #f9f9f9;
+    border-radius: 8px;
+    min-width: 250px;
+    padding: 1rem;
+  }
+}
+
+/* Hide old .container on mobile */
+@media (max-width: 899px) {
+  .container {
+    display: none !important;
+  }
 }
 
 @media screen and (max-width: 900px) {

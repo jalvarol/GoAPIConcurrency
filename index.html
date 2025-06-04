@@ -10,7 +10,7 @@
 <body>
 <main>
   <header>
-    <a class="logo" href="/">News Demo</a>
+    <a class="logo" href="/">GoHeadlines</a>
     <form action="/search" method="GET">
       <input
               autofocus
@@ -27,9 +27,21 @@
     >View on GitHub</a
     >
   </header>
-  <section class="container" style="display: flex; gap: 2rem; align-items: flex-start;">
-    <!-- News Results (Left) -->
-    <div style="flex: 2;">
+  <!-- API Timings -->
+  <div class="api-timings">
+    <p>News API time: <strong>{{ .NewsElapsed }}</strong></p>
+    <p>Shopping API time: <strong>{{ .ShoppingElapsed }}</strong></p>
+    <p>eBay API time: <strong>{{ .EbayElapsed }}</strong></p>
+  </div>
+  <!-- Swipe indicator for mobile -->
+  <div class="swipe-indicator">
+    <span class="swipe-dot active"></span>
+    <span class="swipe-dot"></span>
+    <span class="swipe-dot"></span>
+  </div>
+  <section class="swipe-container" aria-label="Results">
+    <!-- News Results (First swipe page) -->
+    <div class="swipe-column news-column carousel-section">
       <div class="result-count">
         {{ if .Results }}
         {{ if (gt .Results.TotalResults 0)}}
@@ -71,8 +83,8 @@
         {{ end }}
       </div>
     </div>
-    <!-- Shopping Results (Right) -->
-    <aside style="flex: 1; background: #f9f9f9; padding: 1rem; border-radius: 8px; min-width: 250px;">
+    <!-- Shopping Results (Second swipe page) -->
+    <div class="swipe-column shopping-column carousel-section">
       <h2>Shopping Partners</h2>
       {{ if .ShoppingResults }}
       <ul style="list-style: none; padding: 0;">
@@ -83,7 +95,20 @@
       {{ else }}
       <p>No shopping results yet.</p>
       {{ end }}
-    </aside>
+    </div>
+    <!-- eBay Results (Third swipe page) -->
+    <div class="swipe-column ebay-column carousel-section">
+      <h2>eBay Results</h2>
+      {{ if .EbayResults }}
+      <ul style="list-style: none; padding: 0;">
+        {{ range .EbayResults }}
+        <li style="margin-bottom: 1rem; font-size: 1.1em;">{{ . }}</li>
+        {{ end }}
+      </ul>
+      {{ else }}
+      <p>No eBay results yet.</p>
+      {{ end }}
+    </div>
   </section>
 </main>
 </body>

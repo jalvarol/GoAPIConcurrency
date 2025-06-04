@@ -1,4 +1,4 @@
-module github.com/freshman-tech/news-demo-starter-files
+module github.com/jalvarol/goheadlines
 
 go 1.15
 

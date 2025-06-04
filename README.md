@@ -1,4 +1,4 @@
-# Go News & Shopping Concurrency Demo
+# GoHeadlines
 
 This project demonstrates Go concurrency by fetching news articles and shopping partner results in parallel, then displaying them side-by-side in a modern web UI.
 
