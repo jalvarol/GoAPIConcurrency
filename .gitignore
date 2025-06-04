@@ -1,0 +1,26 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Output folders
+/tmp/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Go modules
+vendor/
+
+# Env files
+.env
+
+# IDE/editor files
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
