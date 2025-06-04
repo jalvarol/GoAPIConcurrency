@@ -9,14 +9,19 @@ html {
 }
 
 :root {
-  --light-green: #00ff00;
-  --dark-green: #003b00;
-  --dark-grey: #777;
-  --light-grey: #dadce0;
+  --teal: #006d75;
+  --black: #101820;
+  --silver: #a2aaad;
+  --orange: #ff8200;
+  --white: #fff;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --primary: var(--teal);
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  background: var(--silver);
+  color: var(--black);
 }
 
 a {
@@ -45,98 +50,185 @@ a.button:hover {
 
 header {
   width: 100%;
-  height: 50px;
+  height: 64px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
-  background-color: var(--light-green);
-  padding: 5px 10px;
+  background: #006d75; /* San Jose Sharks Teal */
+  padding: 0 32px;
   align-items: center;
+  box-shadow: var(--shadow);
+  z-index: 10;
 }
 
 .logo {
-  color: #002200;
+  color: var(--orange);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
 }
 
 form {
-  height: calc(100% - 10px);
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .search-input {
-  width: 500px;
-  height: 100%;
-  border-radius: 4px;
-  border-color: transparent;
-  background-color: var(--dark-green);
-  color: var(--light-green);
-  font-size: 16px;
-  line-height: 1.4;
-  padding-left: 5px;
+  width: 420px;
+  max-width: 90vw;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid var(--teal);
+  background: var(--white);
+  color: var(--black);
+  font-size: 18px;
+  padding: 0 16px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+}
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--orange);
 }
 
 .container {
   width: 100%;
-  max-width: 720px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 20px 40px;
+  padding: 96px 24px 40px;
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
 }
 
 .result-count {
   color: var(--dark-grey);
-  text-align: center;
-  margin-bottom: 15px;
+  text-align: left;
+  margin-bottom: 18px;
+  font-size: 1.1rem;
 }
 
 .search-results {
   list-style: none;
+  padding: 0;
 }
 
 .news-article {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 30px;
-  border: 1px solid var(--light-grey);
-  padding: 15px;
-  border-radius: 4px;
+  margin-bottom: 32px;
+  border: none;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  border-radius: 12px;
   justify-content: space-between;
+  transition: box-shadow 0.2s;
+  border-left: 6px solid var(--teal);
+}
+.news-article:hover {
+  box-shadow: 0 8px 32px rgba(0,109,117,0.10);
+  border-left: 6px solid var(--orange);
 }
 
 .article-image {
-  width: 200px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin-left: 20px;
+  width: 160px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-left: 24px;
+  background: #eee;
 }
 
 .title {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--teal);
 }
 
 .description {
   color: var(--dark-grey);
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  font-size: 1rem;
 }
 
 .metadata {
   display: flex;
   color: var(--dark-green);
   font-size: 14px;
-}
-
-.published-date::before {
-  content: '\0000a0\002022\0000a0';
-  margin: 0 3px;
+  gap: 8px;
 }
 
 .pagination {
-  margin-top: 20px;
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
 }
 
-.previous-page {
-  margin-right: 20px;
+.button {
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 6px;
+  padding: 8px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.button:hover {
+  background: var(--orange);
+  color: var(--black);
+}
+
+aside {
+  flex: 1;
+  background: var(--white);
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  min-width: 260px;
+  box-shadow: var(--shadow);
+  margin-top: 0.5rem;
+}
+
+aside h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+  color: var(--teal);
+}
+
+aside ul li {
+  margin-bottom: 1.1rem;
+  font-size: 1.08em;
+  color: #222;
+}
+
+.pagination a {
+  background: var(--teal);
+  color: var(--white);
+}
+.pagination a:hover {
+  background: var(--orange);
+  color: var(--black);
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 98vw;
+  }
+  aside {
+    margin-top: 2rem;
+    min-width: unset;
+  }
 }
 
 @media screen and (max-width: 550px) {
@@ -145,28 +237,22 @@ form {
     height: auto;
     padding-bottom: 10px;
   }
-
   .logo {
     display: inline-block;
     margin-bottom: 10px;
   }
-
   form, .search-input {
     width: 100%;
   }
-
   .github-button {
     display: none;
   }
-
   .title {
     font-size: 18px;
   }
-
   .description {
     font-size: 14px;
   }
-
   .article-image {
     display: none;
   }
