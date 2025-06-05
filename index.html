@@ -39,9 +39,12 @@
     <span class="swipe-dot"></span>
     <span class="swipe-dot"></span>
   </div>
-  <section class="swipe-container" aria-label="Results">
+  <section class="swipe-container carousel" aria-label="Results">
+    <!-- Carousel navigation arrows for desktop -->
+    <button class="carousel-arrow left" aria-label="Previous section" tabindex="0">&#8592;</button>
+    <button class="carousel-arrow right" aria-label="Next section" tabindex="0">&#8594;</button>
     <!-- News Results (First swipe page) -->
-    <div class="swipe-column news-column carousel-section">
+    <div class="swipe-column news-column carousel-section active">
       <div class="result-count">
         {{ if .Results }}
         {{ if (gt .Results.TotalResults 0)}}
@@ -111,5 +114,7 @@
     </div>
   </section>
 </main>
+<!-- Add carousel script at the end of body -->
+<script src="/assets/swipe.js"></script>
 </body>
 </html>

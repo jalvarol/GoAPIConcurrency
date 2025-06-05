@@ -13,9 +13,15 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
+	}
 	start := time.Now()
 	appID := os.Getenv("EBAY_APP_ID")
 	certID := os.Getenv("EBAY_CERT_ID")
