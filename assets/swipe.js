@@ -1,20 +1,17 @@
 // Swipe and click navigation for GoHeadlines vertical carousel (mobile) and 3-column (desktop)
-(function() {
+document.addEventListener('DOMContentLoaded', function () {
   const sections = document.querySelectorAll('.carousel-section');
+  const leftArrow = document.querySelector('.carousel-arrow.left');
+  const rightArrow = document.querySelector('.carousel-arrow.right');
   const dots = document.querySelectorAll('.swipe-dot');
   let current = 0;
   let isMobile = window.matchMedia('(max-width: 900px)').matches;
 
   function showSection(idx) {
     sections.forEach((sec, i) => {
-      if (isMobile) {
-        sec.style.display = i === idx ? 'block' : 'none';
-      } else {
-        sec.style.display = 'block'; // All visible on desktop
-      }
-    });
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === idx);
+      sec.style.display = i === idx ? 'block' : 'none';
+      sec.classList.toggle('active', i === idx);
+      if (dots[i]) dots[i].classList.toggle('active', i === idx);
     });
     current = idx;
   }
@@ -26,42 +23,68 @@
     showSection((current - 1 + sections.length) % sections.length);
   }
 
-  // Touch events for swipe (mobile)
-  let startY = null;
-  document.addEventListener('touchstart', function(e) {
-    if (!isMobile) return;
-    startY = e.touches[0].clientY;
-  });
-  document.addEventListener('touchend', function(e) {
-    if (!isMobile || startY === null) return;
-    let endY = e.changedTouches[0].clientY;
-    if (endY - startY > 50) prevSection(); // swipe down
-    else if (startY - endY > 50) nextSection(); // swipe up
-    startY = null;
-  });
+  // Remove arrow click and keyboard navigation for mobile and desktop
+  if (leftArrow && rightArrow) {
+    leftArrow.style.display = 'none';
+    rightArrow.style.display = 'none';
+  }
 
-  // Dot click navigation
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => showSection(i));
-  });
+  // --- Swipe for all devices (mobile and desktop) ---
+  let startX = null;
+  let isTouching = false;
+  const container = document.querySelector('.swipe-container');
+  if (container) {
+    container.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 1) {
+        startX = e.touches[0].clientX;
+        isTouching = true;
+      }
+    });
+    container.addEventListener('touchmove', function (e) {
+      if (isTouching) e.preventDefault();
+    }, { passive: false });
+    container.addEventListener('touchend', function (e) {
+      if (!isTouching || startX === null) return;
+      let endX = e.changedTouches[0].clientX;
+      let diff = endX - startX;
+      if (diff > 50) prevSection();
+      else if (diff < -50) nextSection();
+      startX = null;
+      isTouching = false;
+    });
+    // Mouse drag for desktop swipe
+    let mouseDown = false;
+    let mouseStartX = null;
+    container.addEventListener('mousedown', function (e) {
+      mouseDown = true;
+      mouseStartX = e.clientX;
+    });
+    container.addEventListener('mousemove', function (e) {
+      if (!mouseDown) return;
+      e.preventDefault();
+    });
+    container.addEventListener('mouseup', function (e) {
+      if (!mouseDown || mouseStartX === null) return;
+      let mouseEndX = e.clientX;
+      let diff = mouseEndX - mouseStartX;
+      if (diff > 50) prevSection();
+      else if (diff < -50) nextSection();
+      mouseDown = false;
+      mouseStartX = null;
+    });
+    container.addEventListener('mouseleave', function () {
+      mouseDown = false;
+      mouseStartX = null;
+    });
+  }
 
-  // Keyboard navigation (optional)
-  document.addEventListener('keydown', function(e) {
-    if (!isMobile) return;
-    if (e.key === 'ArrowUp') prevSection();
-    if (e.key === 'ArrowDown') nextSection();
-  });
-
-  // Responsive: update on resize
-  window.addEventListener('resize', function() {
-    isMobile = window.matchMedia('(max-width: 900px)').matches;
-    showSection(isMobile ? current : 0);
-    // Show all sections on desktop
-    if (!isMobile) {
-      sections.forEach(sec => sec.style.display = 'block');
-    }
-  });
+  // Dots navigation (optional)
+  if (dots.length) {
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => showSection(idx));
+    });
+  }
 
   // Init
   showSection(0);
-})();
+});

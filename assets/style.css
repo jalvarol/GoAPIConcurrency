@@ -360,3 +360,61 @@ html, body {
     display: none;
   }
 }
+
+/* Carousel styles */
+.carousel {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+.carousel-section {
+  display: none;
+  flex: 1 0 100%;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s;
+}
+.carousel-section.active {
+  display: flex;
+}
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  opacity: 0.8;
+  transition: background 0.2s, opacity 0.2s;
+}
+.carousel-arrow.left {
+  left: 0.5rem;
+}
+.carousel-arrow.right {
+  right: 0.5rem;
+}
+.carousel-arrow:focus,
+.carousel-arrow:hover {
+  background: #f0f0f0;
+  opacity: 1;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 700px) {
+  .carousel-arrow {
+    display: none;
+  }
+}
+
+/* Center the swipe section content */
+.swipe-column {
+  justify-content: center;
+  align-items: center;
+}
