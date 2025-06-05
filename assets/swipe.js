@@ -23,59 +23,48 @@ document.addEventListener('DOMContentLoaded', function () {
     showSection((current - 1 + sections.length) % sections.length);
   }
 
-  // Remove arrow click and keyboard navigation for mobile and desktop
+  // Show arrows for desktop (mouse) only
+  function updateArrowVisibility() {
+    const isDesktop = window.matchMedia('(pointer: fine) and (hover: hover)').matches;
+    if (leftArrow && rightArrow) {
+      leftArrow.style.display = isDesktop ? 'block' : 'none';
+      rightArrow.style.display = isDesktop ? 'block' : 'none';
+    }
+  }
+  updateArrowVisibility();
+  window.addEventListener('resize', updateArrowVisibility);
+
+  // Arrow navigation for desktop (mouse)
   if (leftArrow && rightArrow) {
-    leftArrow.style.display = 'none';
-    rightArrow.style.display = 'none';
+    leftArrow.addEventListener('click', prevSection);
+    rightArrow.addEventListener('click', nextSection);
   }
 
-  // --- Swipe for all devices (mobile and desktop) ---
+  // --- Swipe for all devices (mobile and trackpad) ---
   let startX = null;
-  let isTouching = false;
+  let isDragging = false;
   const container = document.querySelector('.swipe-container');
   if (container) {
+    // Touch events for mobile/trackpad
     container.addEventListener('touchstart', function (e) {
       if (e.touches.length === 1) {
         startX = e.touches[0].clientX;
-        isTouching = true;
+        isDragging = true;
       }
     });
     container.addEventListener('touchmove', function (e) {
-      if (isTouching) e.preventDefault();
+      if (isDragging) e.preventDefault();
     }, { passive: false });
     container.addEventListener('touchend', function (e) {
-      if (!isTouching || startX === null) return;
+      if (!isDragging || startX === null) return;
       let endX = e.changedTouches[0].clientX;
       let diff = endX - startX;
       if (diff > 50) prevSection();
       else if (diff < -50) nextSection();
       startX = null;
-      isTouching = false;
+      isDragging = false;
     });
-    // Mouse drag for desktop swipe
-    let mouseDown = false;
-    let mouseStartX = null;
-    container.addEventListener('mousedown', function (e) {
-      mouseDown = true;
-      mouseStartX = e.clientX;
-    });
-    container.addEventListener('mousemove', function (e) {
-      if (!mouseDown) return;
-      e.preventDefault();
-    });
-    container.addEventListener('mouseup', function (e) {
-      if (!mouseDown || mouseStartX === null) return;
-      let mouseEndX = e.clientX;
-      let diff = mouseEndX - mouseStartX;
-      if (diff > 50) prevSection();
-      else if (diff < -50) nextSection();
-      mouseDown = false;
-      mouseStartX = null;
-    });
-    container.addEventListener('mouseleave', function () {
-      mouseDown = false;
-      mouseStartX = null;
-    });
+    // Remove mouse drag for desktop, keep only arrows for mouse
   }
 
   // Dots navigation (optional)

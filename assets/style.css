@@ -380,34 +380,50 @@ html, body {
   display: flex;
 }
 .carousel-arrow {
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  background: #fff;
+  background: var(--teal);
+  color: #fff;
   border: none;
-  font-size: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
-  z-index: 10;
-  padding: 0.5rem 1rem;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  opacity: 0.8;
+  z-index: 100;
+  padding: 0.1rem 0.5rem 0.2rem 0.5rem;
+  border-radius: 8px;
+  box-shadow: none;
+  opacity: 0.95;
   transition: background 0.2s, opacity 0.2s;
+  outline: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-arrow svg {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 .carousel-arrow.left {
-  left: 0.5rem;
+  left: 18px;
+  top: 50%;
 }
 .carousel-arrow.right {
-  right: 0.5rem;
+  right: 18px;
+  top: 50%;
 }
 .carousel-arrow:focus,
 .carousel-arrow:hover {
-  background: #f0f0f0;
+  background: #222;
+  color: #fff;
   opacity: 1;
 }
 
 /* Hide arrows on mobile */
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .carousel-arrow {
     display: none;
   }
